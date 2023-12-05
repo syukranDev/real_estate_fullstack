@@ -1,14 +1,15 @@
 const express = require('express')
 const userRoute = express.Router()
+const jwtCheck = require('../config/auth0Config.js')
 
 const {createUser, bookVisit, getAllBookings, cancelBooking, favouriteBooking, getAllFavourites} = require("../controllers/userController")
 
-userRoute.post('/register', createUser)
-userRoute.post('/bookVisit/:id', bookVisit)
+userRoute.post('/register', jwtCheck , createUser)
+userRoute.post('/bookVisit/:id', jwtCheck,  bookVisit)
 userRoute.get('/getAllBookings', getAllBookings)
-userRoute.post('/removeBooking/:id', cancelBooking)
-userRoute.post('/toFav/:rid', favouriteBooking)
-userRoute.post('/getAllFavourites', getAllFavourites)
+userRoute.post('/removeBooking/:id', jwtCheck, cancelBooking)
+userRoute.post('/toFav/:rid', jwtCheck, favouriteBooking)
+userRoute.post('/getAllFavourites', jwtCheck, getAllFavourites)
 
 
 module.exports = userRoute
